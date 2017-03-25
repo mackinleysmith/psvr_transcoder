@@ -1,11 +1,12 @@
 module Main where
 
-import PsvrTranscoder (transcode)
-import Options.Applicative
+import           Options.Applicative
+import           PsvrTranscoder      (transcode)
 
 data Config = Config
-  { quiet  :: Bool
-  , files  :: [String] }
+  { quiet   :: Bool
+  , monitor :: Bool
+  , files   :: [String] }
 
 config :: Parser Config
 config = Config
@@ -13,7 +14,11 @@ config = Config
         ( long "quiet"
        <> short 'q'
        <> help "Whether to be quiet" )
-    <*> some ( argument str $ metavar "FILES..." )
+    <*> switch
+        ( long "monitor"
+       <> short 'm'
+       <> help "Monitor for changes to a directory" )
+    <*> some ( argument str $ metavar "FILES OR DIRECTORIES..." )
 
 main :: IO ()
 main = transcode_each =<< execParser opts
@@ -24,7 +29,7 @@ main = transcode_each =<< execParser opts
      <> header "psvr_transcode - a simple FFmpeg-based utility to encode video for PSVR" )
 
 transcode_each :: Config -> IO ()
-transcode_each (Config _ []) = return ()
-transcode_each (Config quiet' (path:paths)) = do
+transcode_each (Config _ _ []) = return ()
+transcode_each (Config quiet' monitor' (path:paths)) = do
   transcode path
-  transcode_each $ Config quiet' paths
+  transcode_each $ Config quiet' monitor' paths
