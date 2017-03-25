@@ -1,0 +1,34 @@
+name: PsvrTranscoder
+
+dependencies:
+  - base
+
+library:
+  exposed-modules: PsvrTranscoder
+  source-dirs: src
+  dependencies:
+    - process
+    - system-fileio
+    - system-filepath
+    - text
+    - optparse-applicative
+
+executables:
+  psvr_transcode:
+    main: Main.hs
+    source-dirs: src
+    ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+    dependencies:
+      - process
+      - system-fileio
+      - system-filepath
+      - text
+      - optparse-applicative
+
+tests:
+  test:
+    main: Tests.hs
+    source-dirs: test
+    dependencies:
+      - PsvrTranscoder
+      - hspec
