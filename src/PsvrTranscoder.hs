@@ -16,13 +16,14 @@ data VideoFile = VideoFile
 transcode :: String -> IO ()
 transcode path_str =
   case toText maybe_working_base of
-    Right working_base ->
+    Right working_base -> do
       runFFmpegOn
         VideoFile
           { pathStr = path_str
           , workingBase = working_base
           , maybeWorkingExt = maybe_working_ext
-          , inputFile = input_file } >> return ()
+          , inputFile = input_file }
+      return ()
     _ -> return ()
   where
     input_file = decodeString path_str
