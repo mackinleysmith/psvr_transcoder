@@ -8,10 +8,10 @@ import           System.Exit
 import           System.Process
 
 data VideoFile = VideoFile
-  { pathStr    :: String
-  , filePath   :: Filesystem.Path.CurrentOS.FilePath
-  , baseName   :: T.Text
-  , fileExt :: Maybe T.Text }
+  { pathStr  :: String
+  , filePath :: Filesystem.Path.CurrentOS.FilePath
+  , baseName :: T.Text
+  , fileExt  :: Maybe T.Text }
 
 transcode :: String -> IO ()
 transcode path_str =
