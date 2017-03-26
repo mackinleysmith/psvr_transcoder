@@ -7,7 +7,7 @@ main :: IO ()
 main = transcodeEach =<< parseConfig
 
 transcodeEach :: Config -> IO ()
-transcodeEach (Config _ _ []) = return ()
+transcodeEach Config { files = [] } = return ()
 transcodeEach (Config quiet' monitor' (path:paths)) = do
   transcode path
-  transcodeEach $ Config quiet' monitor' paths
+  transcodeEach ( Config quiet' monitor' paths )
