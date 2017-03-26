@@ -30,10 +30,10 @@ transcode path_str =
     (maybe_working_base, maybe_working_ext) = splitExtension input_file
 
 runFFmpegOn :: VideoFile -> IO Bool
-runFFmpegOn video_file = (== ExitSuccess) <$> system ( command video_file )
+runFFmpegOn video_file = (== ExitSuccess) <$> system ( commandFor video_file )
 
-command :: VideoFile -> String
-command video_file @ VideoFile { pathStr = input_path } =
+commandFor :: VideoFile -> String
+commandFor video_file @ VideoFile { pathStr = input_path } =
   "ffmpeg -i \"" ++ input_path ++ "\" " ++ options ++ " \"" ++ output_file ++ "\""
   where
     options = "-vcodec libx264 -profile:v high -level:v 4.2 -s 1920x1080 -preset slow -crf 18 -c:a libfdk_aac -vbr 5"
