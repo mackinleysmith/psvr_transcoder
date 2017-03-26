@@ -1,7 +1,9 @@
 module Main where
 
 import           Config
-import           PsvrTranscoder   (transcode)
+import qualified Data.Text                 as T
+import           Filesystem.Path.CurrentOS
+import           PsvrTranscoder            (transcode)
 import           System.Directory
 
 main :: IO ()
@@ -23,8 +25,19 @@ transcodeAll (path:paths) = do
 transcodeFileOrDirectory :: String -> IO ()
 transcodeFileOrDirectory path = do
   exists <- doesFileExist path
-  if exists then transcode path
-  else transcodeDirectoryContents path
+  if exists then transcodeFileIfVideo path
+  else           transcodeDirectoryContents path
+
+transcodeFileIfVideo :: String -> IO ()
+transcodeFileIfVideo path =
+  case maybe_ext of
+    Just ext
+       | ext == T.pack "mp4" -> transcode path
+       | otherwise -> return ()
+    _ -> return ()
+  where
+    input_file     = decodeString path
+    (_, maybe_ext) = splitExtension input_file
 
 transcodeDirectoryContents :: String -> IO ()
 transcodeDirectoryContents path = do
