@@ -41,10 +41,10 @@ commandFor video_file @ VideoFile { pathStr = path_str } =
 
 outputFileFor :: VideoFile -> String
 outputFileFor VideoFile { baseName = working_base, fileExt = maybe_ext } =
-  filename ++ "_psvr_180_sbs." ++ original_extension
+  filename ++ "_psvr_180_sbs" ++ original_extension
   where
     filename = T.unpack working_base
     original_extension =
       case maybe_ext of
-        Just ext -> T.unpack ext
+        Just ext -> '.' : T.unpack ext
         _ -> ""
