@@ -18,7 +18,7 @@ transcode path_str = do
       case toText maybe_working_base of
         Left _ -> return False
         Right working_base -> do
-          let output_file = working_base `T.append` (T.pack "_psvr_180_sbs") `T.append` T.pack "." `T.append` ( case maybe_working_ext of Just ext -> ext; _ -> T.pack "" )
-          let command = (T.pack "ffmpeg -i \"") `T.append` input_file `T.append` (T.pack "\" -vcodec libx264 -profile:v high -level:v 4.2 -s 1920x1080 -preset slow -crf 18 -c:a libfdk_aac -vbr 5 \"") `T.append` output_file `T.append` (T.pack "\"")
+          let output_file = working_base `T.append` T.pack "_psvr_180_sbs" `T.append` T.pack "." `T.append` ( case maybe_working_ext of Just ext -> ext; _ -> T.pack "" )
+          let command = T.pack "ffmpeg -i \"" `T.append` input_file `T.append` T.pack "\" -vcodec libx264 -profile:v high -level:v 4.2 -s 1920x1080 -preset slow -crf 18 -c:a libfdk_aac -vbr 5 \"" `T.append` output_file `T.append` T.pack "\""
           exit_code <- system $ T.unpack command
           return $ exit_code == ExitSuccess
