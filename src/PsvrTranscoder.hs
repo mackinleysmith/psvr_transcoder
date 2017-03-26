@@ -2,10 +2,10 @@
 
 module PsvrTranscoder (transcode) where
 
-import Filesystem.Path.CurrentOS
-import System.Exit
-import System.Process
-import qualified Data.Text as T
+import qualified Data.Text                 as T
+import           Filesystem.Path.CurrentOS
+import           System.Exit
+import           System.Process
 
 transcode :: String -> IO Bool
 transcode path_str = do
