@@ -17,7 +17,7 @@ transcode :: String -> IO ()
 transcode path_str =
   case toText maybe_working_base of
     Right working_base -> do
-      runFFmpegOn
+      _ <- runFFmpegOn
         VideoFile
           { pathStr = path_str
           , workingBase = working_base
