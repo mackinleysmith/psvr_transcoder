@@ -39,6 +39,7 @@ command video_file @ (VideoFile input_path _ _ _) =
 
 outputFileFor :: VideoFile -> String
 outputFileFor (VideoFile _ working_base maybe_working_ext _) =
-  T.unpack working_base ++ "_psvr_180_sbs." ++ original_extension
+  filename ++ "_psvr_180_sbs." ++ original_extension
   where
+    filename = T.unpack working_base
     original_extension = case maybe_working_ext of Just ext -> T.unpack ext; _ -> ""
