@@ -15,7 +15,7 @@ data VideoFile = VideoFile
 
 transcode :: String -> IO ()
 transcode path_str =
-  case toText maybe_working_base of
+  case toText maybe_base_name of
     Right base_name -> do
       _ <- runFFmpegOn
         VideoFile
@@ -27,7 +27,7 @@ transcode path_str =
     _ -> return ()
   where
     input_file = decodeString path_str
-    (maybe_working_base, maybe_ext) = splitExtension input_file
+    (maybe_base_name, maybe_ext) = splitExtension input_file
 
 runFFmpegOn :: VideoFile -> IO Bool
 runFFmpegOn video_file = (== ExitSuccess) <$> system ( commandFor video_file )
