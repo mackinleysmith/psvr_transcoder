@@ -17,6 +17,7 @@ library
     , system-filepath
     , text
     , optparse-applicative
+    , directory
   exposed-modules:
       PsvrTranscoder
   other-modules:
@@ -37,6 +38,7 @@ executable psvr_transcode
     , system-filepath
     , text
     , optparse-applicative
+    , directory
   other-modules:
       Config
       PsvrTranscoder
