@@ -11,10 +11,10 @@ decideWhatToDo Config { monitor = True } = putStrLn "Monitor!"
 decideWhatToDo config' = transcodeFilesFromConfig config'
 
 transcodeFilesFromConfig :: Config -> IO ()
-transcodeFilesFromConfig = transcodeFiles . files
+transcodeFilesFromConfig = transcodeFiles . paths
 
 transcodeFiles :: [String] -> IO ()
 transcodeFiles [] = return ()
-transcodeFiles (file:files) = do
-  transcode file
-  transcodeFiles files
+transcodeFiles (path:paths) = do
+  transcode path
+  transcodeFiles paths

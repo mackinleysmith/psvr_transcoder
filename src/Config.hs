@@ -5,7 +5,7 @@ import           Options.Applicative
 data Config = Config
   { quiet   :: Bool
   , monitor :: Bool
-  , files   :: [String] }
+  , paths   :: [String] }
 
 parseConfig :: IO Config
 parseConfig = execParser opts
