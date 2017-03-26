@@ -20,6 +20,7 @@ library
   exposed-modules:
       PsvrTranscoder
   other-modules:
+      Config
       Main
       Paths_PsvrTranscoder
   default-language: Haskell2010
@@ -37,6 +38,7 @@ executable psvr_transcode
     , text
     , optparse-applicative
   other-modules:
+      Config
       PsvrTranscoder
   default-language: Haskell2010
 
