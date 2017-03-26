@@ -1,7 +1,8 @@
 module Main where
 
 import           Config
-import           PsvrTranscoder      (transcode)
+import           PsvrTranscoder   (transcode)
+import           System.Directory
 
 main :: IO ()
 main = decideWhatToDo =<< parseConfig
@@ -11,10 +12,21 @@ decideWhatToDo Config { monitor = True } = putStrLn "Monitor!"
 decideWhatToDo config' = transcodeFilesFromConfig config'
 
 transcodeFilesFromConfig :: Config -> IO ()
-transcodeFilesFromConfig = transcodeFiles . paths
+transcodeFilesFromConfig = transcodeAll . paths
 
-transcodeFiles :: [String] -> IO ()
-transcodeFiles [] = return ()
-transcodeFiles (path:paths) = do
-  transcode path
-  transcodeFiles paths
+transcodeAll :: [String] -> IO ()
+transcodeAll [] = return ()
+transcodeAll (path:paths) = do
+  transcodeFileOrDirectory path
+  transcodeAll paths
+
+transcodeFileOrDirectory :: String -> IO ()
+transcodeFileOrDirectory path = do
+  exists <- doesFileExist path
+  if exists then transcode path
+  else transcodeDirectoryContents path
+
+transcodeDirectoryContents :: String -> IO ()
+transcodeDirectoryContents path = do
+  putStrLn "It's a directory!"
+  transcodeAll =<< listDirectory path
