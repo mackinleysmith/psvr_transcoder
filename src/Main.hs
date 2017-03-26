@@ -4,7 +4,11 @@ import           Config
 import           PsvrTranscoder      (transcode)
 
 main :: IO ()
-main = transcodeFilesFromConfig =<< parseConfig
+main = decideWhatToDo =<< parseConfig
+
+decideWhatToDo :: Config -> IO ()
+decideWhatToDo Config { monitor = True } = putStrLn "Monitor!"
+decideWhatToDo config' = transcodeFilesFromConfig config'
 
 transcodeFilesFromConfig :: Config -> IO ()
 transcodeFilesFromConfig = transcodeFiles . files
