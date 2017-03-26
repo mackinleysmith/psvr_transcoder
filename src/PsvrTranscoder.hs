@@ -18,7 +18,7 @@ transcode path_str =
 
 runFFmpegOn :: T.Text -> Filesystem.Path.CurrentOS.FilePath -> Maybe T.Text -> IO Bool
 runFFmpegOn working_base input_file maybe_working_ext =
-  pure (== ExitSuccess) <*> system ( command working_base maybe_working_ext input_file )
+  (== ExitSuccess) <$> system ( command working_base maybe_working_ext input_file )
 
 command :: T.Text -> Maybe T.Text -> Filesystem.Path.CurrentOS.FilePath -> String
 command working_base maybe_working_ext input_file =
