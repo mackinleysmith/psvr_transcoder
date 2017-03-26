@@ -4,10 +4,13 @@ import           Config
 import           PsvrTranscoder      (transcode)
 
 main :: IO ()
-main = transcodeEach =<< parseConfig
+main = transcodeFilesFromConfig =<< parseConfig
 
-transcodeEach :: Config -> IO ()
-transcodeEach Config { files = [] } = return ()
-transcodeEach (Config quiet' monitor' (path:paths)) = do
-  transcode path
-  transcodeEach ( Config quiet' monitor' paths )
+transcodeFilesFromConfig :: Config -> IO ()
+transcodeFilesFromConfig = transcodeFiles . files
+
+transcodeFiles :: [String] -> IO ()
+transcodeFiles [] = return ()
+transcodeFiles (file:files) = do
+  transcode file
+  transcodeFiles files
