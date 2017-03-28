@@ -2,35 +2,20 @@
 
 module PsvrTranscoder (transcode) where
 
-import qualified Data.Text                 as T
-import           Filesystem.Path.CurrentOS
-import           System.Exit
+import qualified Data.Text      as T
 import           System.Process
-
-data VideoFile = VideoFile
-  { pathStr  :: String
-  , filePath :: Filesystem.Path.CurrentOS.FilePath
-  , baseName :: T.Text
-  , fileExt  :: Maybe T.Text }
+import           VideoFile
 
 transcode :: String -> IO ()
 transcode path_str =
-  case toText maybe_base_name of
-    Right base_name -> do
-      _ <- runFFmpegOn
-        VideoFile
-          { pathStr = path_str
-          , filePath = input_file
-          , baseName = base_name
-          , fileExt = maybe_ext }
-      return ()
+  case parseVideoFile path_str of
+    Just videoFile -> runFFmpegOn videoFile
     _ -> return ()
-  where
-    input_file = decodeString path_str
-    (maybe_base_name, maybe_ext) = splitExtension input_file
 
-runFFmpegOn :: VideoFile -> IO Bool
-runFFmpegOn video_file = (== ExitSuccess) <$> system ( commandFor video_file )
+runFFmpegOn :: VideoFile -> IO ()
+runFFmpegOn video_file = do
+  system $ commandFor video_file
+  return ()
 
 commandFor :: VideoFile -> String
 commandFor video_file @ VideoFile { pathStr = path_str } =
