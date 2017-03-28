@@ -23,6 +23,7 @@ library
   other-modules:
       Config
       Main
+      VideoFile
       Paths_PsvrTranscoder
   default-language: Haskell2010
 
@@ -42,6 +43,7 @@ executable psvr_transcode
   other-modules:
       Config
       PsvrTranscoder
+      VideoFile
   default-language: Haskell2010
 
 test-suite test
