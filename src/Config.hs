@@ -3,9 +3,10 @@ module Config where
 import           Options.Applicative
 
 data Config = Config
-  { quiet   :: Bool
-  , monitor :: Bool
-  , paths   :: [String] }
+  { quiet              :: Bool
+  , monitor            :: Bool
+  , equirectangularize :: Bool
+  , paths              :: [String] }
 
 parseConfig :: IO Config
 parseConfig = execParser opts
@@ -25,4 +26,8 @@ config = Config
         ( long "monitor"
        <> short 'm'
        <> help "Monitor for changes to a directory" )
+    <*> switch
+        ( long "equirectangularize"
+       <> short 'e'
+       <> help "Remap spherical video to an equirectangular projection" )
     <*> some ( argument str $ metavar "FILES OR DIRECTORIES..." )
