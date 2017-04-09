@@ -13,6 +13,11 @@ library:
     - text
     - optparse-applicative
     - directory
+    - file-embed
+    - bytestring
+    - regex-base
+    - regex-compat-tdfa
+    - array
 
 executables:
   psvr_transcode:
@@ -26,6 +31,11 @@ executables:
       - text
       - optparse-applicative
       - directory
+      - file-embed
+      - bytestring
+      - regex-base
+      - regex-compat-tdfa
+      - array
 
 tests:
   test:

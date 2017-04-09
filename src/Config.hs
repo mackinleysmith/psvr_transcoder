@@ -31,3 +31,5 @@ config = Config
        <> short 'e'
        <> help "Remap spherical video to an equirectangular projection" )
     <*> some ( argument str $ metavar "FILES OR DIRECTORIES..." )
+
+    -- TODO: option for output directory

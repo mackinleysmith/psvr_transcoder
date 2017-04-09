@@ -18,11 +18,17 @@ library
     , text
     , optparse-applicative
     , directory
+    , file-embed
+    , bytestring
+    , regex-base
+    , regex-compat-tdfa
+    , array
   exposed-modules:
       PsvrTranscoder
   other-modules:
       Config
       Main
+      TranscodeJob
       VideoFile
       Paths_PsvrTranscoder
   default-language: Haskell2010
@@ -40,9 +46,15 @@ executable psvr_transcode
     , text
     , optparse-applicative
     , directory
+    , file-embed
+    , bytestring
+    , regex-base
+    , regex-compat-tdfa
+    , array
   other-modules:
       Config
       PsvrTranscoder
+      TranscodeJob
       VideoFile
   default-language: Haskell2010
 
