@@ -34,7 +34,7 @@ applyTranscodeJobTo video_file @ VideoFile { pathStr = path_str, transcodeJob = 
       _ <- createDirectoryIfMissing False "./x_frames"
       _ <- createDirectoryIfMissing False "./y_frames"
 
-      _ <- system $ "ffmpeg -i \"" ++ path_str ++ "\" -filter:v \"crop=" ++ show height ++ ":" ++ show half_width ++ ":0:0\"  x_frames/frame%04d.jpg -filter:v \"crop=" ++ show height ++ ":" ++ show half_width ++ ":" ++ show half_width ++ ":0\" y_frames/frame%04d.jpg -hide_banner"
+      _ <- system $ "ffmpeg -i \"" ++ path_str ++ "\" -filter:v \"crop=" ++ show half_width ++ ":" ++ show height ++ ":0:0\"  x_frames/frame%04d.jpg -filter:v \"crop=" ++ show half_width ++ ":" ++ show height ++ ":" ++ show half_width ++ ":0\" y_frames/frame%04d.jpg -hide_banner"
 
       _ <- system "ffmpeg -i ./x_frames/frame%04d.jpg -i ./xmap.pgm -i ./ymap.pgm -filter_complex remap -y ./x_frames/frame%04d_corrected.jpg"
       _ <- system "ffmpeg -i ./y_frames/frame%04d.jpg -i ./xmap.pgm -i ./ymap.pgm -filter_complex remap -y ./y_frames/frame%04d_corrected.jpg"
